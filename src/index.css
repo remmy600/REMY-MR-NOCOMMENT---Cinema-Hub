@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #e50914;
+  --color-primary-dark: #b2070f;
+  --color-secondary: #0a0a0a;
+  --color-secondary-light: #1a1a1a;
+  --color-accent: #2196f3;
+  --color-gold: #ffd700;
+}
+
+@layer base {
+  body {
+    @apply bg-secondary text-white font-sans antialiased;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-black/40 backdrop-blur-xl border border-white/10;
+  }
+  
+  .btn-netflix {
+    @apply bg-primary hover:bg-primary-dark text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg shadow-primary/20;
+  }
+
+  .nav-link {
+    @apply text-white/70 hover:text-primary font-medium transition-colors relative;
+  }
+
+  .section-title {
+    @apply text-4xl md:text-6xl font-black uppercase tracking-tighter bg-gradient-to-r from-white to-primary bg-clip-text text-transparent;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-secondary;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-primary-dark;
+}
+
