@@ -24,32 +24,32 @@ export default function Analytics() {
     <section id="analytics" className="max-w-7xl mx-auto px-4 py-20 relative">
       <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-[120px] rounded-full" />
       
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-16">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-16 relative z-10">
         <div>
-          <h2 className="section-title mb-4 italic">UBUROZI ANALYTICS</h2>
-          <p className="text-white/40 uppercase text-xs font-bold tracking-[0.3em]">Live Platform Data • @tigernsanz</p>
+          <h2 className="section-title mb-2">PLATFORM DATA</h2>
+          <p className="mono-label !text-primary">Live Platform Data • @tigernsanz</p>
         </div>
-        <div className="flex items-center gap-4 bg-white/5 border border-white/10 p-2 rounded-2xl">
-          <button className="px-5 py-2 bg-primary text-white rounded-xl text-xs font-bold">24 Hours</button>
-          <button className="px-5 py-2 text-white/40 rounded-xl text-xs font-bold hover:text-white transition-colors">7 Days</button>
-          <button className="px-5 py-2 text-white/40 rounded-xl text-xs font-bold hover:text-white transition-colors">30 Days</button>
+        <div className="flex items-center gap-2 bg-white/5 border border-white/5 p-2 rounded-2xl">
+          <button className="px-6 py-2 bg-primary text-white rounded-xl text-[10px] font-black uppercase italic tracking-tighter">24 Hours</button>
+          <button className="px-6 py-2 text-white/20 rounded-xl text-[10px] font-black uppercase italic tracking-tighter hover:text-white transition-colors">7 Days</button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12 relative z-10">
         {stats.map((stat, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="glass p-8 rounded-3xl border border-white/5 hover:border-white/10 transition-all group"
+            transition={{ delay: i * 0.1 }}
+            className="glass p-10 rounded-[32px] border border-white/5 hover:border-primary/20 transition-all group"
           >
-            <div className={`w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform ${stat.color}`}>
-              <stat.icon size={24} />
+            <div className={`w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform ${stat.color}`}>
+              <stat.icon size={24} strokeWidth={3} />
             </div>
-            <div className="text-4xl font-black italic tracking-tighter mb-1">{stat.value}</div>
-            <div className="flex items-center justify-between font-bold text-xs uppercase tracking-widest text-white/30">
+            <div className="text-5xl font-black italic tracking-tighter mb-2 leading-none">{stat.value}</div>
+            <div className="flex items-center justify-between mono-label">
               {stat.label}
               <span className={stat.change.includes('+') ? 'text-green-500' : 'text-primary'}>{stat.change}</span>
             </div>
@@ -57,25 +57,27 @@ export default function Analytics() {
         ))}
       </div>
 
-      <div className="glass p-8 rounded-3xl h-[400px]">
+      <div className="glass p-10 rounded-[40px] h-[450px] relative z-10 overflow-hidden">
+        <div className="absolute top-0 right-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-20" />
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={data}>
             <defs>
               <linearGradient id="colorViews" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#e50914" stopOpacity={0.3}/>
+                <stop offset="5%" stopColor="#e50914" stopOpacity={0.4}/>
                 <stop offset="95%" stopColor="#e50914" stopOpacity={0}/>
               </linearGradient>
             </defs>
-            <XAxis dataKey="name" stroke="#ffffff20" fontSize={10} tickLine={false} axisLine={false} />
+            <XAxis dataKey="name" stroke="#ffffff10" fontSize={10} tickLine={false} axisLine={false} fontFamily="JetBrains Mono" />
             <Tooltip 
-              contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #ffffff10', borderRadius: '12px' }}
-              itemStyle={{ fontSize: '12px', fontWeight: 'bold' }}
+              contentStyle={{ backgroundColor: '#050505', border: '1px solid #ffffff10', borderRadius: '16px', fontFamily: 'JetBrains Mono' }}
+              itemStyle={{ fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase' }}
+              cursor={{ stroke: '#e50914', strokeWidth: 1 }}
             />
             <Area 
-              type="monotone" 
+              type="step" 
               dataKey="views" 
               stroke="#e50914" 
-              strokeWidth={3}
+              strokeWidth={4}
               fillOpacity={1} 
               fill="url(#colorViews)" 
             />

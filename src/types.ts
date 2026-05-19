@@ -1,3 +1,11 @@
+export interface Review {
+  id: string;
+  user: string;
+  rating: number;
+  comment: string;
+  date: string;
+}
+
 export interface Movie {
   id: string;
   title: string;
@@ -9,6 +17,10 @@ export interface Movie {
   duration: string;
   views: string;
   isYawed?: boolean;
+  director?: string;
+  cast?: string[];
+  trailerUrl?: string;
+  reviews?: Review[];
 }
 
 export const MOVIE_CATEGORIES = [
@@ -28,23 +40,33 @@ export const INITIAL_MOVIES: Movie[] = [
     title: 'Shaka Flime',
     category: 'african',
     poster: 'https://images.unsplash.com/photo-1543165365-07232edbc253?q=80&w=2070&auto=format&fit=crop',
-    description: 'Iyi ni filime yubuturo bwumwami Shaka Zulu. Ikwerekana imico, intambara, nubuturo bwAbantu bAfurika.',
+    description: 'Iyi ni filime yubuturo bwumwami Shaka Zulu. Ikwerekana imico, intambara, nubuturo bwAbantu bAfurika. Urugamba rurakaze cyane mu migenzo ya gicuti n\'iy\'intambara.',
     year: '2026',
     rating: '9.2',
     duration: '2h 35min',
-    views: '1.5M'
+    views: '1.5M',
+    director: 'Tiger Nsanzi',
+    cast: ['Remmy Nsanzimana', 'Predictor Beat', 'Killer DJ'],
+    trailerUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    reviews: [
+      { id: 'r1', user: 'Fabian', rating: 5, comment: 'Iyi film ni hatari! Danger in the building!', date: '2026-05-01' }
+    ]
   },
   {
     id: '2',
     title: 'DANGER IN THE BUILDING',
     category: 'yawed',
     poster: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1925&auto=format&fit=crop',
-    description: 'Tiger Nsanzi yinjira mu nyubako yuzuye akaga, agomba gukiza abari muri yo.',
+    description: 'Tiger Nsanzi yinjira mu nyubako yuzuye akaga, agomba gukiza abari muri yo. Ni filime yuzuye akaga n\'ubwoba ariko iherekejwe n\'amajwi meza ya Predictor.',
     year: '2026',
     rating: '5.0',
     duration: '1h 45min',
     views: '1.2M',
-    isYawed: true
+    isYawed: true,
+    director: 'Remmy Nsanzimana',
+    cast: ['Tiger Nsanzi', 'Killer DJ'],
+    trailerUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    reviews: []
   },
   {
     id: '3',
@@ -55,29 +77,147 @@ export const INITIAL_MOVIES: Movie[] = [
     year: '2018',
     rating: '8.3',
     duration: '2h 14min',
-    views: '5M'
+    views: '5M',
+    director: 'Ryan Coogler',
+    cast: ['Chadwick Boseman', 'Michael B. Jordan', 'Lupita Nyongo'],
+    trailerUrl: 'https://www.youtube.com/embed/xjDjIuHioOo',
+    reviews: []
   },
   {
     id: '4',
     title: 'PREDICTOR ON THE BEAT',
     category: 'yawed',
     poster: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=2070&auto=format&fit=crop',
-    description: 'Predictor atera amajwi mu nzu y’amafirigo, Killer DJ ari kumwe na we.',
+    description: 'Predictor atera amajwi mu nzu y’amafirigo, Killer DJ ari kumwe na we kuva mu gitondo kugeza nimunsi.',
     year: '2026',
     rating: '4.9',
     duration: '1h 30min',
     views: '890K',
-    isYawed: true
+    isYawed: true,
+    director: 'Predictor Beat',
+    cast: ['Predictor', 'Killer DJ', 'Tiger Nsanzi'],
+    trailerUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    reviews: []
   },
   {
     id: '5',
-    title: 'The Dark Knight',
+    title: 'Inception',
+    category: 'sci-fi',
+    poster: 'https://images.unsplash.com/photo-1500462859194-8111aa3dbfd4?q=80&w=1888&auto=format&fit=crop',
+    description: 'Umujura w’inzozi ahabwa inshingano yo gushyira igitekerezo mu mutwe w’umucuruzi unyuze mu nzozi zigeretse.',
+    year: '2010',
+    rating: '8.8',
+    duration: '2h 28min',
+    views: '8M',
+    director: 'Christopher Nolan',
+    cast: ['Leonardo DiCaprio', 'Joseph Gordon-Levitt', 'Elliot Page'],
+    trailerUrl: 'https://www.youtube.com/embed/8hP9D6kZseM',
+    reviews: []
+  },
+  {
+    id: '6',
+    title: 'Dangal',
+    category: 'indian',
+    poster: 'https://images.unsplash.com/photo-1512165012027-c10ba1b6e4e5?q=80&w=2071&auto=format&fit=crop',
+    description: 'Umwana w’umukinnyi wa mukirikiti yigisha abakobwa be uburyo bwo kurwana kugira ngo bageze ku nzozi ze.',
+    year: '2016',
+    rating: '8.4',
+    duration: '2h 41min',
+    views: '12M',
+    director: 'Nitesh Tiwari',
+    cast: ['Aamir Khan', 'Sakshi Tanwar'],
+    trailerUrl: 'https://www.youtube.com/embed/x_7YlGv9u1g',
+    reviews: []
+  },
+  {
+    id: '7',
+    title: 'The Conjuring',
+    category: 'horror',
+    poster: 'https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=2037&auto=format&fit=crop',
+    description: 'Abashakashatsi b’iby’umwuka bafasha umuryango utotezwa n’umwuka mubi mu nzu nshya bimukiyemo.',
+    year: '2013',
+    rating: '7.5',
+    duration: '1h 52min',
+    views: '3.5M',
+    director: 'James Wan',
+    cast: ['Vera Farmiga', 'Patrick Wilson'],
+    trailerUrl: 'https://www.youtube.com/embed/k10ETZ41q5o',
+    reviews: []
+  },
+  {
+    id: '8',
+    title: 'KILLER DJ MIX',
+    category: 'yawed',
+    poster: 'https://images.unsplash.com/photo-1571266028243-e4733b0f0bb1?q=80&w=2070&auto=format&fit=crop',
+    description: 'Killer DJ atera amajwi mu birori byinshi, atera abantu kubyina mu buryo butangaje buzwi nka Yawed.',
+    year: '2026',
+    rating: '4.8',
+    duration: '2h 10min',
+    views: '2.1M',
+    isYawed: true,
+    director: 'Killer DJ',
+    cast: ['Killer DJ', 'Predictor', 'Remmy'],
+    trailerUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    reviews: []
+  },
+  {
+    id: '9',
+    title: 'The Lion King',
+    category: 'african',
+    poster: 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?q=80&w=2059&auto=format&fit=crop',
+    description: "Inkuru y'akanyamasyo k'intare Simba kagerageza kwisubiza intebe y'ubwami yabambuwe na se-wabo Scar.",
+    year: '2019',
+    rating: '6.9',
+    duration: '1h 58min',
+    views: '15M',
+    director: 'Jon Favreau',
+    cast: ['Donald Glover', 'Beyoncé', 'Seth Rogen'],
+    trailerUrl: 'https://www.youtube.com/embed/7TavVZVewpY',
+    reviews: []
+  },
+  {
+    id: '10',
+    title: 'John Wick',
     category: 'action',
-    poster: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=2070&auto=format&fit=crop',
-    description: 'Batman ahangana na Joker, umwanzi ushaka guteza imbere umwanya no kwangiza Gotham City.',
-    year: '2008',
-    rating: '9.0',
-    duration: '2h 32min',
-    views: '10M'
+    poster: 'https://images.unsplash.com/photo-1559583985-c80d8ad9b29f?q=80&w=1974&auto=format&fit=crop',
+    description: 'Uwaye ari umwicanyi kabuhariwe agaruka mu bikorwa by’urugomo nyuma y’uko abagizi ba nabi bamubujije amahwemo.',
+    year: '2014',
+    rating: '7.4',
+    duration: '1h 41min',
+    views: '22M',
+    director: 'Chad Stahelski',
+    cast: ['Keanu Reeves', 'Michael Nyqvist', 'Alfie Allen'],
+    trailerUrl: 'https://www.youtube.com/embed/2AUmvWm5Pqc',
+    reviews: []
+  },
+  {
+    id: '11',
+    title: 'RRR',
+    category: 'indian',
+    poster: 'https://images.unsplash.com/photo-1606575917822-263a2a6cc496?q=80&w=2070&auto=format&fit=crop',
+    description: 'Inkuru y’ubucuti n’ubwitange hagati y’intwari ebyiri zirwanira ubwigenge bw’Ubuhinde mu gihe cy’abakoloni.',
+    year: '2022',
+    rating: '7.8',
+    duration: '3h 7min',
+    views: '18M',
+    director: 'S.S. Rajamouli',
+    cast: ['N.T. Rama Rao Jr.', 'Ram Charan', 'Ajay Devgn'],
+    trailerUrl: 'https://www.youtube.com/embed/NgBoMJy386M',
+    reviews: []
+  },
+  {
+    id: '12',
+    title: 'A Quiet Place',
+    category: 'horror',
+    poster: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2068&auto=format&fit=crop',
+    description: 'Umuryango ugomba kuba mu mimerere y’iceceka kugira ngo utanyagwa n’ibinyabuzima biterwa n’amajwi.',
+    year: '2018',
+    rating: '7.5',
+    duration: '1h 30min',
+    views: '6M',
+    director: 'John Krasinski',
+    cast: ['Emily Blunt', 'John Krasinski', 'Millicent Simmonds'],
+    trailerUrl: 'https://www.youtube.com/embed/WR7cc5t7tv8',
+    reviews: []
   }
 ];

@@ -10,6 +10,7 @@ import Analytics from './components/Analytics';
 import Footer from './components/Footer';
 import YawedSection from './components/YawedSection';
 import SuggestionModal from './components/SuggestionModal';
+import MovieDetailsModal from './components/MovieDetailsModal';
 
 export default function App() {
   const [movies, setMovies] = useState<Movie[]>(INITIAL_MOVIES);
@@ -18,6 +19,7 @@ export default function App() {
   const [watchlist, setWatchlist] = useState<string[]>([]);
   const [isAIChatOpen, setIsAIChatOpen] = useState(false);
   const [isSuggestionModalOpen, setIsSuggestionModalOpen] = useState(false);
+  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
   const filteredMovies = useMemo(() => {
     return movies.filter(movie => {
@@ -49,10 +51,10 @@ export default function App() {
                   <button
                     key={cat.id}
                     onClick={() => setSelectedCategory(cat.id)}
-                    className={`px-6 py-2 rounded-full font-semibold transition-all ${
+                    className={`px-8 py-3 rounded-2xl font-black italic uppercase tracking-tighter transition-all text-xs border ${
                       selectedCategory === cat.id 
-                        ? 'bg-primary text-white shadow-lg shadow-primary/30 scale-105' 
-                        : 'bg-white/5 hover:bg-white/10 text-white/70 border border-white/5'
+                        ? 'bg-primary border-primary text-white shadow-netflix scale-105' 
+                        : 'bg-white/5 hover:bg-white/10 text-white/30 border-white/5'
                     }`}
                   >
                     {cat.label}
@@ -62,13 +64,13 @@ export default function App() {
             </div>
             
             <div className="relative group w-full md:w-96">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-primary transition-colors" />
+              <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-white/10 group-focus-within:text-primary transition-colors" />
               <input
                 type="text"
                 placeholder="Shaka film cyangwa umukinnyi..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/10 rounded-2xl focus:outline-none focus:border-primary/50 transition-all text-white placeholder:text-white/20"
+                className="w-full pl-16 pr-6 py-5 bg-white/5 border border-white/5 rounded-3xl focus:outline-none focus:border-primary/50 transition-all text-white placeholder:text-white/10 font-bold italic uppercase tracking-tighter"
               />
             </div>
           </div>
@@ -87,7 +89,11 @@ export default function App() {
                   <MovieCard 
                     movie={movie} 
                     isWatchlisted={watchlist.includes(movie.id)}
-                    onToggleWatchlist={() => toggleWatchlist(movie.id)}
+                    onToggleWatchlist={(e) => {
+                      e.stopPropagation();
+                      toggleWatchlist(movie.id);
+                    }}
+                    onClick={() => setSelectedMovie(movie)}
                   />
                 </motion.div>
               ))}
@@ -167,6 +173,15 @@ export default function App() {
       <Footer />
       <AIChat isOpen={isAIChatOpen} onClose={() => setIsAIChatOpen(false)} />
       <SuggestionModal isOpen={isSuggestionModalOpen} onClose={() => setIsSuggestionModalOpen(false)} />
+      {selectedMovie && (
+        <MovieDetailsModal 
+          isOpen={!!selectedMovie} 
+          movie={selectedMovie} 
+          allMovies={movies}
+          onClose={() => setSelectedMovie(null)}
+          onSelectMovie={(m) => setSelectedMovie(m)}
+        />
+      )}
     </div>
   );
 }

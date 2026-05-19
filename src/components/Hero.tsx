@@ -22,30 +22,30 @@ export default function Hero({ onSuggestionClick }: HeroProps) {
           transition={{ duration: 0.8 }}
           className="max-w-2xl"
         >
-          <div className="flex items-center gap-3 mb-6">
-             <div className="flex items-center gap-2 bg-primary/20 backdrop-blur-md px-3 py-1 rounded-md border border-primary/30">
-               <TrendingUp size={14} className="text-primary" />
-               <span className="text-xs font-bold uppercase tracking-widest text-primary">#1 in Rwanda today</span>
+          <div className="flex items-center gap-3 mb-8">
+             <div className="flex items-center gap-2 bg-primary/20 backdrop-blur-md px-4 py-2 rounded-lg border border-primary/30">
+               <TrendingUp size={12} className="text-primary" />
+               <span className="mono-label !text-primary !tracking-widest">#1 in Rwanda today</span>
              </div>
-             <span className="text-xs font-bold uppercase tracking-widest text-white/50">Tiger Nsanzi Official</span>
+             <span className="mono-label">Tiger Nsanzi Official</span>
           </div>
 
-          <h1 className="text-7xl md:text-9xl font-black uppercase italic tracking-tighter mb-6 leading-[0.8]">
-            SHAKA <br /> <span className="text-primary italic">FLIME</span>
+          <h1 className="text-[clamp(4rem,15vw,12rem)] font-black uppercase italic tracking-tighter mb-8 leading-[0.75] select-none">
+            SHAKA <br /> <span className="text-primary">FLIME</span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-white/70 mb-10 leading-relaxed font-medium">
-            Iyi ni filime yubuturo bwumwami Shaka Zulu. Ikwerekana imico, intambara, nubuturo bwAbantu bAfurika. DANGER IN THE BUILDING!
+          <p className="text-xl md:text-2xl text-white/50 mb-12 leading-tight font-medium max-w-xl group">
+             Iyi ni filime yubuturo bwumwami Shaka Zulu. <span className="text-white">DANGER IN THE BUILDING!</span>
           </p>
 
-          <div className="flex flex-wrap gap-4">
-            <button className="btn-netflix flex items-center gap-3 px-10">
-              <Play size={20} fill="currentColor" />
+          <div className="flex flex-wrap gap-6">
+            <button className="btn-netflix flex items-center gap-4 px-12 group">
+              <Play size={20} fill="currentColor" className="group-hover:scale-125 transition-transform" />
               Reba Noneho
             </button>
             <button 
               onClick={onSuggestionClick}
-              className="bg-white/10 hover:bg-white/20 backdrop-blur-xl text-white font-bold py-3 px-8 rounded-full transition-all duration-300 flex items-center gap-3 border border-white/10"
+              className="bg-white/5 hover:bg-white/10 backdrop-blur-xl text-white font-black py-4 px-10 rounded-2xl transition-all duration-300 flex items-center gap-4 border border-white/10 italic uppercase tracking-tighter cursor-pointer"
             >
               <MessageSquare size={20} />
               Tanga Igitekerezo

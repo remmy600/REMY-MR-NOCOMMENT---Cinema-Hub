@@ -6,63 +6,67 @@ import { cn } from '../lib/utils';
 interface MovieCardProps {
   movie: Movie;
   isWatchlisted: boolean;
-  onToggleWatchlist: () => void;
+  onToggleWatchlist: (e: React.MouseEvent) => void;
+  onClick: () => void;
 }
 
-export default function MovieCard({ movie, isWatchlisted, onToggleWatchlist }: MovieCardProps) {
+export default function MovieCard({ movie, isWatchlisted, onToggleWatchlist, onClick }: MovieCardProps) {
   return (
-    <div className="group relative bg-secondary-light rounded-2xl overflow-hidden border border-white/5 hover:border-primary/50 transition-all duration-500">
-      <div className="aspect-[2/3] relative overflow-hidden">
+    <div 
+      onClick={onClick}
+      className="group relative bg-secondary-light rounded-[32px] overflow-hidden border border-white/5 hover:border-primary/50 transition-all duration-700 cursor-pointer"
+    >
+      <div className="aspect-[4/5] relative overflow-hidden">
         <img 
           src={movie.poster} 
           alt={movie.title}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 brightness-[0.8] group-hover:brightness-100"
+          className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 brightness-[0.7] group-hover:brightness-100"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-t from-secondary via-transparent to-transparent opacity-60" />
         
         {/* Badges */}
-        <div className="absolute top-4 left-4 flex flex-col gap-2">
+        <div className="absolute top-6 left-6 flex flex-col gap-2">
           {movie.isYawed && (
-            <span className="bg-accent text-white text-[10px] font-black uppercase px-2 py-1 rounded italic tracking-widest flex items-center gap-1">
-              <DollarSign size={10} /> YAWED
+            <span className="bg-primary text-white text-[9px] font-black uppercase px-3 py-1 rounded-full italic tracking-[0.2em] shadow-xl shadow-primary/40">
+              YAWED
             </span>
           )}
-          <span className="bg-black/60 backdrop-blur-md text-white text-[10px] font-black uppercase px-2 py-1 rounded italic tracking-widest">
-            {movie.year}
-          </span>
         </div>
 
-        <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md px-2 py-1 rounded flex items-center gap-1 border border-white/10">
-          <Star size={10} className="text-gold fill-gold" />
-          <span className="text-[10px] font-bold">{movie.rating}</span>
+        <div className="absolute top-6 right-6 glass px-3 py-1.5 rounded-full flex items-center gap-2">
+          <Star size={12} className="text-primary fill-primary" />
+          <span className="text-[10px] font-black italic">{movie.rating}</span>
         </div>
       </div>
 
-      <div className="p-5 relative">
-        <div className="flex items-center justify-between mb-2">
-           <span className="text-[10px] font-black text-primary uppercase tracking-widest italic">{movie.category}</span>
-           <div className="flex items-center gap-2 text-white/40 text-[10px] font-bold">
-             <Eye size={10} />
+      <div className="p-8 relative">
+        <div className="flex items-center justify-between mb-4">
+           <span className="mono-label !text-primary">{movie.category}</span>
+           <div className="flex items-center gap-2 text-white/20 text-[10px] font-bold">
+             <Eye size={12} />
              {movie.views}
            </div>
         </div>
-        <h3 className="text-lg font-black uppercase italic tracking-tighter truncate mb-4 group-hover:text-primary transition-colors">
+        <h3 className="text-2xl font-black uppercase italic tracking-tighter truncate mb-6 group-hover:text-primary transition-colors leading-none">
           {movie.title}
         </h3>
         
-        <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-          <button className="flex-1 bg-white text-black py-2 rounded-lg font-bold text-xs uppercase flex items-center justify-center gap-2 hover:bg-primary hover:text-white transition-colors">
+        <div className="flex gap-3">
+          <button className="flex-1 bg-white text-black py-4 rounded-xl font-black text-xs uppercase italic tracking-tighter flex items-center justify-center gap-2 hover:bg-primary hover:text-white transition-all transform hover:scale-[1.02] shadow-xl shadow-white/5">
             <Play size={14} fill="currentColor" />
             Reba
           </button>
           <button 
-            onClick={onToggleWatchlist}
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggleWatchlist(e);
+            }}
             className={cn(
-              "p-2 rounded-lg border border-white/20 transition-all",
-              isWatchlisted ? "bg-primary border-primary text-white" : "hover:bg-white/10 text-white/60"
+              "w-12 h-12 flex items-center justify-center rounded-xl border border-white/10 transition-all transform hover:scale-[1.02]",
+              isWatchlisted ? "bg-primary border-primary text-white shadow-xl shadow-primary/20" : "hover:bg-white/5 text-white/30"
             )}
           >
-            {isWatchlisted ? <Check size={16} /> : <Plus size={16} />}
+            {isWatchlisted ? <Check size={20} strokeWidth={3} /> : <Plus size={20} strokeWidth={3} />}
           </button>
         </div>
       </div>
