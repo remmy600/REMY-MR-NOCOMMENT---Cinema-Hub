@@ -10,7 +10,7 @@ export default function Hero({ onSuggestionClick }: HeroProps) {
     <section id="home" className="relative h-[95vh] flex items-center justify-center overflow-hidden">
       {/* Dynamic Background */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1925&auto=format&fit=crop')] bg-cover bg-center brightness-[0.3]" />
+        <div className="absolute inset-0 bg-[url('/src/assets/images/shaka_flime_poster_1779178669774.png')] bg-cover bg-center brightness-[0.3]" />
         <div className="absolute inset-0 bg-gradient-to-t from-secondary via-transparent to-black/60" />
         <div className="absolute inset-0 bg-gradient-to-r from-secondary/80 via-transparent to-transparent" />
       </div>

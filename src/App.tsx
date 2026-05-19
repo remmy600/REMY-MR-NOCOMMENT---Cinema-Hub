@@ -79,7 +79,7 @@ export default function App() {
                     onClick={() => setSelectedCategory(cat.id)}
                     className={`px-8 py-3 rounded-2xl font-black italic uppercase tracking-tighter transition-all text-[10px] border ${
                       selectedCategory === cat.id 
-                        ? 'bg-primary border-primary text-white shadow-netflix scale-105' 
+                        ? 'bg-primary border-primary text-white shadow-premium scale-105' 
                         : 'bg-white/5 hover:bg-white/10 text-white/30 border-white/5'
                     }`}
                   >

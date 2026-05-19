@@ -55,7 +55,7 @@ export default function MovieCard({ movie, isWatchlisted, onToggleWatchlist, onT
         <div className="flex gap-3">
           <button 
             onClick={(e) => { e.stopPropagation(); onClick(); }}
-            className="flex-1 bg-white text-black py-4 rounded-xl font-black text-xs uppercase italic tracking-tighter flex items-center justify-center gap-2 hover:bg-primary hover:text-white transition-all transform hover:scale-[1.02] shadow-xl shadow-white/5"
+            className="flex-1 bg-primary/10 text-primary py-4 rounded-xl font-black text-xs uppercase italic tracking-tighter flex items-center justify-center gap-2 hover:bg-primary hover:text-white transition-all transform hover:scale-[1.02] border border-primary/20 shadow-xl shadow-primary/5"
           >
             <Play size={14} fill="currentColor" />
             Reba

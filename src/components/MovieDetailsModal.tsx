@@ -95,7 +95,7 @@ export default function MovieDetailsModal({ movie, allMovies, isOpen, onClose, o
                     <div className="absolute inset-0 flex items-center justify-center">
                       <button 
                         onClick={() => setShowTrailer(true)}
-                        className="w-24 h-24 bg-primary text-white rounded-full flex items-center justify-center shadow-netflix transform transition-transform hover:scale-110"
+                        className="w-24 h-24 bg-primary text-white rounded-full flex items-center justify-center shadow-premium transform transition-transform hover:scale-110"
                       >
                         <Play size={40} fill="currentColor" />
                       </button>
