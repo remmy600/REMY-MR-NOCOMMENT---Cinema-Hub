@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Search, Film, Laptop, DollarSign, MessageSquare, Instagram, Youtube, Phone, Mail, TrendingUp } from 'lucide-react';
+import { Search, Film, Laptop, DollarSign, MessageSquare, Instagram, Youtube, Phone, Mail, TrendingUp, Filter, ChevronDown, Play, X } from 'lucide-react';
 import { INITIAL_MOVIES, MOVIE_CATEGORIES, Movie } from './types';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -11,24 +11,38 @@ import Footer from './components/Footer';
 import YawedSection from './components/YawedSection';
 import SuggestionModal from './components/SuggestionModal';
 import MovieDetailsModal from './components/MovieDetailsModal';
+import AIRecommendations from './components/AIRecommendations';
 
 export default function App() {
   const [movies, setMovies] = useState<Movie[]>(INITIAL_MOVIES);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState<'year' | 'rating' | 'title'>('year');
   const [watchlist, setWatchlist] = useState<string[]>([]);
+  const [history, setHistory] = useState<string[]>([]);
   const [isAIChatOpen, setIsAIChatOpen] = useState(false);
   const [isSuggestionModalOpen, setIsSuggestionModalOpen] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
+  const [trailerMovie, setTrailerMovie] = useState<Movie | null>(null);
 
   const filteredMovies = useMemo(() => {
-    return movies.filter(movie => {
+    let result = movies.filter(movie => {
       const matchesCategory = selectedCategory === 'all' || movie.category === selectedCategory;
       const matchesSearch = movie.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
                            movie.description.toLowerCase().includes(searchQuery.toLowerCase());
       return matchesCategory && matchesSearch;
     });
-  }, [selectedCategory, searchQuery, movies]);
+
+    return [...result].sort((a, b) => {
+      if (sortBy === 'year') return b.year.localeCompare(a.year);
+      if (sortBy === 'rating') return parseFloat(b.rating) - parseFloat(a.rating);
+      return a.title.localeCompare(b.title);
+    });
+  }, [selectedCategory, searchQuery, movies, sortBy]);
+
+  const addToHistory = (id: string) => {
+    setHistory(prev => [id, ...prev.filter(i => i !== id)].slice(0, 5));
+  };
 
   const toggleWatchlist = (id: string) => {
     setWatchlist(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
@@ -41,17 +55,28 @@ export default function App() {
       <main>
         <Hero onSuggestionClick={() => setIsSuggestionModalOpen(true)} />
         
+        {history.length > 0 && (
+          <AIRecommendations 
+            viewHistory={history.map(id => movies.find(m => m.id === id)!).filter(Boolean)} 
+            allMovies={movies}
+            onSelectMovie={(m) => {
+              setSelectedMovie(m);
+              addToHistory(m.id);
+            }}
+          />
+        )}
+        
         {/* Search and Filter Section */}
         <section id="movies" className="max-w-7xl mx-auto px-4 py-20">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
-            <div>
-              <h2 className="section-title mb-4">UBUTURO BWA FILMS</h2>
-              <div className="flex flex-wrap gap-2">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 mb-16 relative">
+            <div className="flex-1">
+              <h2 className="section-title mb-6">UBUTURO BWA FILMS</h2>
+              <div className="flex flex-wrap gap-3">
                 {MOVIE_CATEGORIES.map(cat => (
                   <button
                     key={cat.id}
                     onClick={() => setSelectedCategory(cat.id)}
-                    className={`px-8 py-3 rounded-2xl font-black italic uppercase tracking-tighter transition-all text-xs border ${
+                    className={`px-8 py-3 rounded-2xl font-black italic uppercase tracking-tighter transition-all text-[10px] border ${
                       selectedCategory === cat.id 
                         ? 'bg-primary border-primary text-white shadow-netflix scale-105' 
                         : 'bg-white/5 hover:bg-white/10 text-white/30 border-white/5'
@@ -63,15 +88,37 @@ export default function App() {
               </div>
             </div>
             
-            <div className="relative group w-full md:w-96">
-              <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-white/10 group-focus-within:text-primary transition-colors" />
-              <input
-                type="text"
-                placeholder="Shaka film cyangwa umukinnyi..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-16 pr-6 py-5 bg-white/5 border border-white/5 rounded-3xl focus:outline-none focus:border-primary/50 transition-all text-white placeholder:text-white/10 font-bold italic uppercase tracking-tighter"
-              />
+            <div className="flex flex-col sm:flex-row gap-4 items-stretch lg:items-center">
+              {/* Sorting */}
+              <div className="relative group min-w-[180px]">
+                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20">
+                  <Filter size={14} />
+                </div>
+                <select 
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value as any)}
+                  className="w-full pl-12 pr-10 py-4 bg-white/5 border border-white/5 rounded-2xl appearance-none focus:outline-none focus:border-primary/50 text-[10px] font-black uppercase italic tracking-widest text-white/50 cursor-pointer"
+                >
+                  <option value="year" className="bg-secondary">Newest First</option>
+                  <option value="rating" className="bg-secondary">Top Rated</option>
+                  <option value="title" className="bg-secondary">Title A-Z</option>
+                </select>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 text-white/20 pointer-events-none">
+                  <ChevronDown size={14} />
+                </div>
+              </div>
+
+              {/* Search */}
+              <div className="relative group flex-1 sm:w-80">
+                <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-white/10 group-focus-within:text-primary transition-colors" />
+                <input
+                  type="text"
+                  placeholder="Shaka film cyangwa umukinnyi..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-16 pr-6 py-4 bg-white/5 border border-white/5 rounded-2xl focus:outline-none focus:border-primary/50 transition-all text-white placeholder:text-white/10 text-sm font-bold italic uppercase tracking-tighter"
+                />
+              </div>
             </div>
           </div>
 
@@ -93,7 +140,14 @@ export default function App() {
                       e.stopPropagation();
                       toggleWatchlist(movie.id);
                     }}
-                    onClick={() => setSelectedMovie(movie)}
+                    onTrailerClick={(e) => {
+                      e.stopPropagation();
+                      setTrailerMovie(movie);
+                    }}
+                    onClick={() => {
+                      setSelectedMovie(movie);
+                      addToHistory(movie.id);
+                    }}
                   />
                 </motion.div>
               ))}
@@ -181,6 +235,36 @@ export default function App() {
           onClose={() => setSelectedMovie(null)}
           onSelectMovie={(m) => setSelectedMovie(m)}
         />
+      )}
+      {trailerMovie && (
+        <div className="fixed inset-0 z-[500] flex items-center justify-center p-4">
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setTrailerMovie(null)}
+            className="absolute inset-0 bg-black/90 backdrop-blur-md"
+          />
+          <motion.div 
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="relative w-full max-w-5xl aspect-video bg-black rounded-[40px] overflow-hidden shadow-2xl border border-white/5"
+          >
+            <button 
+              onClick={() => setTrailerMovie(null)}
+              className="absolute top-6 right-6 z-10 p-3 bg-black/60 rounded-full text-white/70 hover:text-white border border-white/10"
+            >
+              <X size={24} />
+            </button>
+            <iframe 
+              src={trailerMovie.trailerUrl + '?autoplay=1'}
+              className="w-full h-full"
+              frameBorder="0"
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+            />
+          </motion.div>
+        </div>
       )}
     </div>
   );

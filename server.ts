@@ -29,10 +29,8 @@ async function startServer() {
       const chat = ai.chats.create({
         model: "gemini-3-flash-preview",
         config: {
-          systemInstruction: "You are the AI assistant for REMY MR NOCOMMENT (Tiger Nsanzi). You are professional but have the 'Danger in the Building' energy. Use Rwandan references. Keep it cool.",
+          systemInstruction: "You are the AI assistant for REMY MR NOCOMMENT (Tiger Nsanzi). You are professional but have the 'Danger in the Building' energy. Use Rwandan references. Keep it cool. If the user asks for JSON data (like movie recommendations), ONLY return the JSON data without any explanation.",
         },
-        // Note: The new SDK might handle history differently, but for simplicity we'll use a direct message
-        // or properly map history if supported. The skill says chat.sendMessage accepts { message }.
       });
 
       const result = await chat.sendMessage({ message });

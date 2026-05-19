@@ -7,10 +7,11 @@ interface MovieCardProps {
   movie: Movie;
   isWatchlisted: boolean;
   onToggleWatchlist: (e: React.MouseEvent) => void;
+  onTrailerClick: (e: React.MouseEvent) => void;
   onClick: () => void;
 }
 
-export default function MovieCard({ movie, isWatchlisted, onToggleWatchlist, onClick }: MovieCardProps) {
+export default function MovieCard({ movie, isWatchlisted, onToggleWatchlist, onTrailerClick, onClick }: MovieCardProps) {
   return (
     <div 
       onClick={onClick}
@@ -52,9 +53,18 @@ export default function MovieCard({ movie, isWatchlisted, onToggleWatchlist, onC
         </h3>
         
         <div className="flex gap-3">
-          <button className="flex-1 bg-white text-black py-4 rounded-xl font-black text-xs uppercase italic tracking-tighter flex items-center justify-center gap-2 hover:bg-primary hover:text-white transition-all transform hover:scale-[1.02] shadow-xl shadow-white/5">
+          <button 
+            onClick={(e) => { e.stopPropagation(); onClick(); }}
+            className="flex-1 bg-white text-black py-4 rounded-xl font-black text-xs uppercase italic tracking-tighter flex items-center justify-center gap-2 hover:bg-primary hover:text-white transition-all transform hover:scale-[1.02] shadow-xl shadow-white/5"
+          >
             <Play size={14} fill="currentColor" />
             Reba
+          </button>
+          <button 
+            onClick={onTrailerClick}
+            className="w-12 h-12 flex items-center justify-center rounded-xl border border-white/10 hover:bg-white/5 text-white/30 transition-all font-black text-[10px] italic"
+          >
+            TR
           </button>
           <button 
             onClick={(e) => {
