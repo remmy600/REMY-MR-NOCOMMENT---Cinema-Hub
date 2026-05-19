@@ -56,6 +56,49 @@ export default function App() {
       <main>
         <Hero onSuggestionClick={() => setIsSuggestionModalOpen(true)} />
         
+        {/* Trending Section */}
+        <section className="py-20 bg-secondary-light/30">
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="flex items-center justify-between mb-12">
+              <div>
+                <span className="mono-label !text-primary mb-2 block">Hot right now</span>
+                <h2 className="text-4xl md:text-6xl font-black uppercase italic tracking-tighter">Trending <span className="text-primary">Now</span></h2>
+              </div>
+              <div className="h-px flex-1 mx-12 bg-white/5" />
+              <button className="text-xs font-bold text-white/30 uppercase tracking-[0.3em] hover:text-primary transition-colors">See all</button>
+            </div>
+            
+            <div className="flex gap-8 overflow-x-auto pb-10 custom-scrollbar snap-x">
+              {movies.filter(m => parseFloat(m.rating) >= 8).map(movie => (
+                <div 
+                  key={movie.id} 
+                  onClick={() => {
+                    setSelectedMovie(movie);
+                    addToHistory(movie.id);
+                  }}
+                  className="min-w-[300px] md:min-w-[350px] snap-start group cursor-pointer"
+                >
+                  <div className="aspect-[16/9] rounded-[32px] overflow-hidden mb-6 relative border border-white/5 group-hover:border-primary/50 transition-all duration-700">
+                    <img src={movie.poster} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center shadow-premium transform scale-90 group-hover:scale-100 transition-transform">
+                        <Play size={24} fill="currentColor" />
+                      </div>
+                    </div>
+                  </div>
+                  <h4 className="text-xl font-black uppercase italic tracking-tighter group-hover:text-primary transition-colors">{movie.title}</h4>
+                  <div className="flex items-center gap-4 mt-2">
+                    <span className="text-xs font-bold text-white/30">{movie.year}</span>
+                    <div className="w-1 h-1 rounded-full bg-white/20" />
+                    <span className="text-xs font-bold text-white/30 uppercase tracking-widest">{movie.category}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {history.length > 0 && (
           <AIRecommendations 
             viewHistory={history.map(id => movies.find(m => m.id === id)!).filter(Boolean)} 

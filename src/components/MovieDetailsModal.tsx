@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Star, Play, Clock, User, Calendar, MessageCircle, ChevronRight, Send } from 'lucide-react';
+import { X, Star, Play, Clock, User, Calendar, MessageCircle, ChevronRight, Send, Share2, Download } from 'lucide-react';
 import { Movie, Review } from '../types';
 import { cn } from '../lib/utils';
 
@@ -119,6 +119,20 @@ export default function MovieDetailsModal({ movie, allMovies, isOpen, onClose, o
                 <h2 className="text-5xl md:text-7xl font-black uppercase italic tracking-tighter mb-8 leading-none">
                   {movie.title}
                 </h2>
+
+                <div className="flex gap-4 mb-12">
+                  <button className="flex items-center gap-3 px-8 py-4 bg-primary text-white rounded-2xl font-black uppercase italic tracking-tighter shadow-premium hover:scale-105 transition-all">
+                    <Play size={18} fill="currentColor" />
+                    Bure imbere
+                  </button>
+                  <button className="flex items-center gap-3 px-6 py-4 bg-white/5 border border-white/5 rounded-2xl font-black uppercase italic tracking-tighter hover:bg-white/10 transition-all">
+                    <Share2 size={18} />
+                    Sangiza
+                  </button>
+                  <button className="flex items-center gap-3 px-6 py-4 bg-white/5 border border-white/5 rounded-2xl font-black uppercase italic tracking-tighter hover:bg-white/10 transition-all">
+                    <Download size={18} />
+                  </button>
+                </div>
 
                 <div className="flex flex-wrap gap-10 mb-12">
                   <div className="flex flex-col gap-2">

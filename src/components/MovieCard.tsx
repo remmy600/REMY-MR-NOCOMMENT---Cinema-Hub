@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { Play, Plus, Check, Star, Eye } from 'lucide-react';
+import { Play, Plus, Check, Star, Eye, TrendingUp } from 'lucide-react';
 import { Movie } from '../types';
 import { cn } from '../lib/utils';
 
@@ -30,6 +30,12 @@ export default function MovieCard({ movie, isWatchlisted, onToggleWatchlist, onT
           {movie.isYawed && (
             <span className="bg-primary text-white text-[9px] font-black uppercase px-3 py-1 rounded-full italic tracking-[0.2em] shadow-xl shadow-primary/40">
               YAWED
+            </span>
+          )}
+          {parseFloat(movie.rating) >= 8.5 && (
+            <span className="bg-amber-500 text-black text-[9px] font-black uppercase px-3 py-1 rounded-full italic tracking-[0.2em] shadow-xl shadow-amber-500/40 flex items-center gap-1">
+              <TrendingUp size={10} />
+              TRENDING
             </span>
           )}
         </div>
@@ -87,5 +93,3 @@ export default function MovieCard({ movie, isWatchlisted, onToggleWatchlist, onT
     </div>
   );
 }
-
-import { DollarSign } from 'lucide-react';
