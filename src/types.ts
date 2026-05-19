@@ -219,5 +219,37 @@ export const INITIAL_MOVIES: Movie[] = [
     cast: ['Emily Blunt', 'John Krasinski', 'Millicent Simmonds'],
     trailerUrl: 'https://www.youtube.com/embed/WR7cc5t7tv8',
     reviews: []
+  },
+  {
+    id: '13',
+    title: 'KILLER DJ ATTACK',
+    category: 'yawed',
+    poster: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=2070&auto=format&fit=crop',
+    description: 'Killer DJ atera umuziki uvura indwara, ariko bitunguranye abantu batangira kubyina barenze urugero. DANGER IN THE BUILDING!',
+    year: '2026',
+    rating: '5.0',
+    duration: '1h 20min',
+    views: '2.4M',
+    isYawed: true,
+    director: 'Tiger Nsanzi',
+    cast: ['Killer DJ', 'Predictor'],
+    trailerUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    reviews: []
+  },
+  {
+    id: '14',
+    title: 'THE BOSS TIGER',
+    category: 'action',
+    poster: 'https://images.unsplash.com/photo-1605333396915-47ed6b68a00e?q=80&w=2070&auto=format&fit=crop',
+    description: 'Inkuru ya Tiger Nsanzi mu rugendo rwe rwo kuba umuyobozi w’ikinema mu Rwanda. Ni filime y’amateka n’ubutwari.',
+    year: '2026',
+    rating: '4.9',
+    duration: '2h 05min',
+    views: '1.8M',
+    isYawed: true,
+    director: 'Remmy Nsanzimana',
+    cast: ['Tiger Nsanzi'],
+    trailerUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    reviews: []
   }
 ];

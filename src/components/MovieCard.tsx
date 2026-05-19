@@ -61,10 +61,14 @@ export default function MovieCard({ movie, isWatchlisted, onToggleWatchlist, onT
             Reba
           </button>
           <button 
-            onClick={onTrailerClick}
-            className="w-12 h-12 flex items-center justify-center rounded-xl border border-white/10 hover:bg-white/5 text-white/30 transition-all font-black text-[10px] italic"
+            onClick={(e) => {
+              e.stopPropagation();
+              onTrailerClick(e);
+            }}
+            className="w-12 h-12 flex items-center justify-center rounded-xl border border-white/10 hover:bg-white/5 text-primary transition-all shadow-xl hover:shadow-primary/10 group/btn"
+            title="Play Trailer"
           >
-            TR
+            <Play size={18} fill="currentColor" className="group-hover/btn:scale-110 transition-transform" />
           </button>
           <button 
             onClick={(e) => {

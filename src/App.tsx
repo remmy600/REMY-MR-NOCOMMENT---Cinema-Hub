@@ -12,6 +12,7 @@ import YawedSection from './components/YawedSection';
 import SuggestionModal from './components/SuggestionModal';
 import MovieDetailsModal from './components/MovieDetailsModal';
 import AIRecommendations from './components/AIRecommendations';
+import Newsletter from './components/Newsletter';
 
 export default function App() {
   const [movies, setMovies] = useState<Movie[]>(INITIAL_MOVIES);
@@ -164,6 +165,7 @@ export default function App() {
 
         <YawedSection />
         <Analytics />
+        <Newsletter />
         
         <section id="contact" className="max-w-7xl mx-auto px-4 py-20 border-t border-white/5">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
